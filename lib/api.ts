@@ -1,0 +1,98 @@
+import axios from 'axios';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+
+// 创建 axios 实例
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// 请求拦截器 - 添加 token
+api.interceptors.request.use(
+  (config) => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// 响应拦截器 - 处理错误
+api.interceptors.response.use(
+  (response) => response.data,
+  (error) => {
+    if (error.response?.status === 401) {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+// Auth API
+export const login = (username: string, password: string) =>
+  api.post('/auth/login', { username, password });
+
+export const logout = () => api.post('/auth/logout');
+
+export const getCurrentUser = () => api.get('/auth/me');
+
+// Article API
+export const fetchArticles = (params?: any) => api.get('/articles', { params });
+
+export const fetchArticle = (id: string | number) => api.get(`/articles/${id}`);
+
+export const createArticle = (data: any) => api.post('/articles', data);
+
+export const updateArticle = (id: string | number, data: any) =>
+  api.put(`/articles/${id}`, data);
+
+export const deleteArticle = (id: string | number) => api.delete(`/articles/${id}`);
+
+// Category API
+export const fetchCategories = () => api.get('/categories');
+
+export const fetchCategory = (id: string | number) => api.get(`/categories/${id}`);
+
+export const createCategory = (data: any) => api.post('/categories', data);
+
+export const updateCategory = (id: string | number, data: any) =>
+  api.put(`/categories/${id}`, data);
+
+export const deleteCategory = (id: string | number) => api.delete(`/categories/${id}`);
+
+// Tag API
+export const fetchTags = () => api.get('/tags');
+
+export const fetchTag = (id: string | number) => api.get(`/tags/${id}`);
+
+export const createTag = (data: any) => api.post('/tags', data);
+
+export const updateTag = (id: string | number, data: any) =>
+  api.put(`/tags/${id}`, data);
+
+export const deleteTag = (id: string | number) => api.delete(`/tags/${id}`);
+
+// Upload API
+export const uploadImage = (file: File) => {
+  const formData = new FormData();
+  formData.append('image', file);
+  return api.post('/upload/image', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+export default api;
