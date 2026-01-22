@@ -54,9 +54,8 @@ export default function CustomSelect({
           {selectedOption?.label || placeholder}
         </span>
         <svg
-          className={`w-5 h-5 text-white/60 transition-transform ${
-            isOpen ? 'rotate-180' : ''
-          }`}
+          className={`w-5 h-5 text-white/60 transition-transform ${isOpen ? 'rotate-180' : ''
+            }`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -81,11 +80,10 @@ export default function CustomSelect({
                   onChange(option.value);
                   setIsOpen(false);
                 }}
-                className={`w-full px-4 py-3 text-left transition-all text-sm ${
-                  option.value === value
+                className={`w-full px-4 py-3 text-left transition-all text-sm ${option.value === value
                     ? 'bg-gradient-to-r from-[#00d4ff]/20 to-[#8b5cf6]/20 text-white font-medium border-l-2 border-[#00d4ff]'
                     : 'text-white/70 hover:bg-white/5 hover:text-white hover:border-l-2 hover:border-white/20'
-                }`}
+                  }`}
                 style={{
                   animationDelay: `${index * 0.02}s`,
                 }}

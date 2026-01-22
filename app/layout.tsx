@@ -22,7 +22,7 @@ export default function RootLayout({
         <Providers>
           {/* 3D 背景 */}
           <ThreeBackground />
-          
+
           {/* 主要内容 */}
           <div className="relative z-10">
             <Navigation />

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Next.js 前端
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: blog-frontend
+    restart: always
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    networks:
+      - blog-network
+
+  # Express 后端
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: blog-backend
+    restart: always
+    ports:
+      - "3003:3001"
+    env_file:
+      - .env.docker
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./public/uploads:/app/public/uploads
+    networks:
+      - blog-network
+
+networks:
+  blog-network:
+    driver: bridge

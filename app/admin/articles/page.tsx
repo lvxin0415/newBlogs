@@ -112,11 +112,10 @@ export default function AdminArticlesPage() {
                       </td>
                       <td className="px-6 py-4">
                         <span
-                          className={`inline-block px-2 py-1 rounded text-xs ${
-                            article.status === 'published'
+                          className={`inline-block px-2 py-1 rounded text-xs ${article.status === 'published'
                               ? 'bg-green-500/20 text-green-400'
                               : 'bg-gray-500/20 text-gray-400'
-                          }`}
+                            }`}
                         >
                           {article.status === 'published' ? '已发布' : '草稿'}
                         </span>

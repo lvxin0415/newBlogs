@@ -123,18 +123,18 @@ export default function NewArticlePage() {
         name: newCategoryName,
         description: newCategoryDesc,
       });
-      
+
       // 刷新分类列表
       await loadCategoriesAndTags();
-      
+
       // 自动选中新创建的分类
       setFormData({ ...formData, categoryId: newCategory.category.id.toString() });
-      
+
       // 重置表单
       setNewCategoryName('');
       setNewCategoryDesc('');
       setShowNewCategoryForm(false);
-      
+
       toast.success('分类创建成功！');
     } catch (error) {
       console.error('Failed to create category:', error);
@@ -151,20 +151,20 @@ export default function NewArticlePage() {
     try {
       const { createTag } = await import('@/lib/api');
       const newTag = await createTag({ name: newTagName });
-      
+
       // 刷新标签列表
       await loadCategoriesAndTags();
-      
+
       // 自动选中新创建的标签
       setFormData((prev) => ({
         ...prev,
         tagIds: [...prev.tagIds, newTag.tag.id.toString()],
       }));
-      
+
       // 重置表单
       setNewTagName('');
       setShowNewTagForm(false);
-      
+
       toast.success('标签创建成功！');
     } catch (error) {
       console.error('Failed to create tag:', error);
@@ -195,8 +195,8 @@ export default function NewArticlePage() {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center justify-between h-20">
               <div className="flex items-center gap-6">
-                <Link 
-                  href="/admin/articles" 
+                <Link
+                  href="/admin/articles"
                   className="group flex items-center gap-2 text-[#94a3b8] hover:text-white transition-colors"
                 >
                   <svg className="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -204,9 +204,9 @@ export default function NewArticlePage() {
                   </svg>
                   <span className="font-medium">返回列表</span>
                 </Link>
-                
+
                 <div className="h-6 w-px bg-white/10"></div>
-                
+
                 <h1 className="text-2xl font-display font-bold gradient-text">
                   新建文章
                 </h1>
@@ -334,7 +334,7 @@ export default function NewArticlePage() {
                         AI
                       </span>
                     </label>
-                    
+
                     {formData.coverImage ? (
                       <div className="group/cover relative mb-4 rounded-xl overflow-hidden border-2 border-[#00d4ff]/30">
                         <img
@@ -371,7 +371,7 @@ export default function NewArticlePage() {
                         articleContent={formData.content}
                         onCoverGenerated={(url) => setFormData({ ...formData, coverImage: url })}
                       />
-                      
+
                       <div className="relative">
                         <div className="absolute inset-0 flex items-center">
                           <div className="w-full border-t border-white/10"></div>
@@ -427,7 +427,7 @@ export default function NewArticlePage() {
                         新建
                       </button>
                     </label>
-                    
+
                     {showNewCategoryForm ? (
                       <div className="space-y-3 mb-4 p-4 bg-white/5 border border-[#8b5cf6]/30 rounded-xl">
                         <input
@@ -466,7 +466,7 @@ export default function NewArticlePage() {
                         </div>
                       </div>
                     ) : null}
-                    
+
                     <CustomSelect
                       value={formData.categoryId}
                       onChange={(value) => setFormData({ ...formData, categoryId: value })}
@@ -504,7 +504,7 @@ export default function NewArticlePage() {
                         新建
                       </button>
                     </label>
-                    
+
                     {showNewTagForm ? (
                       <div className="space-y-3 mb-4 p-4 bg-white/5 border border-[#ec4899]/30 rounded-xl">
                         <input
@@ -541,18 +541,17 @@ export default function NewArticlePage() {
                         </div>
                       </div>
                     ) : null}
-                    
+
                     <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto scrollbar-hide">
                       {tags.map((tag: any) => (
                         <button
                           key={tag.id}
                           type="button"
                           onClick={() => handleTagToggle(tag.id.toString())}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                            formData.tagIds.includes(tag.id.toString())
+                          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${formData.tagIds.includes(tag.id.toString())
                               ? 'bg-gradient-to-r from-[#ec4899] to-[#8b5cf6] text-white shadow-lg shadow-[#ec4899]/20'
                               : 'bg-white/5 text-[#94a3b8] border border-white/10 hover:border-[#ec4899]/50 hover:text-white'
-                          }`}
+                            }`}
                         >
                           {tag.name}
                         </button>
@@ -575,11 +574,10 @@ export default function NewArticlePage() {
                     <div className="space-y-4">
                       <label className="flex items-center justify-between cursor-pointer group/option">
                         <span className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
-                            formData.isPublic 
-                              ? 'bg-[#00d4ff] border-[#00d4ff]' 
+                          <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${formData.isPublic
+                              ? 'bg-[#00d4ff] border-[#00d4ff]'
                               : 'border-white/20 group-hover/option:border-white/40'
-                          }`}>
+                            }`}>
                             {formData.isPublic && (
                               <svg className="w-3 h-3 text-[#0a0a0a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -598,11 +596,10 @@ export default function NewArticlePage() {
 
                       <label className="flex items-center justify-between cursor-pointer group/option">
                         <span className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
-                            formData.isTop 
-                              ? 'bg-[#8b5cf6] border-[#8b5cf6]' 
+                          <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${formData.isTop
+                              ? 'bg-[#8b5cf6] border-[#8b5cf6]'
                               : 'border-white/20 group-hover/option:border-white/40'
-                          }`}>
+                            }`}>
                             {formData.isTop && (
                               <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -621,11 +618,10 @@ export default function NewArticlePage() {
 
                       <label className="flex items-center justify-between cursor-pointer group/option">
                         <span className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
-                            formData.isRecommended 
-                              ? 'bg-[#ec4899] border-[#ec4899]' 
+                          <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${formData.isRecommended
+                              ? 'bg-[#ec4899] border-[#ec4899]'
                               : 'border-white/20 group-hover/option:border-white/40'
-                          }`}>
+                            }`}>
                             {formData.isRecommended && (
                               <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -683,8 +679,8 @@ export default function NewArticlePage() {
                         </span>
                       )}
                     </button>
-                    
-                    <Link 
+
+                    <Link
                       href="/admin/articles"
                       className="block w-full py-3 px-6 text-center bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-[#94a3b8] hover:text-white font-medium rounded-xl transition-all"
                     >

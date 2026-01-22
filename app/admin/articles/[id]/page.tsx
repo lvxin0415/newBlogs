@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { 
-  fetchArticle, 
-  updateArticle, 
-  fetchCategories, 
-  fetchTags, 
-  uploadImage 
+import {
+  fetchArticle,
+  updateArticle,
+  fetchCategories,
+  fetchTags,
+  uploadImage
 } from '@/lib/api';
 import { useAuthStore } from '@/lib/store';
 import CustomSelect from '@/components/CustomSelect';
@@ -148,7 +148,7 @@ export default function EditArticlePage() {
         name: newCategoryName,
         description: '',
       });
-      
+
       await loadArticleAndOptions();
       setFormData((prev) => ({ ...prev, categoryId: newCategory.category.id.toString() }));
       setNewCategoryName('');
@@ -169,7 +169,7 @@ export default function EditArticlePage() {
     try {
       const { createTag } = await import('@/lib/api');
       const newTag = await createTag({ name: newTagName });
-      
+
       await loadArticleAndOptions();
       setFormData((prev) => ({
         ...prev,
@@ -290,7 +290,7 @@ export default function EditArticlePage() {
                   新建分类
                 </button>
               </div>
-              
+
               {showNewCategoryForm && (
                 <div className="mb-3 p-3 bg-slate-800 border border-slate-700 rounded-lg space-y-2">
                   <input
@@ -321,7 +321,7 @@ export default function EditArticlePage() {
                   </div>
                 </div>
               )}
-              
+
               <CustomSelect
                 value={formData.categoryId}
                 onChange={(value) => setFormData({ ...formData, categoryId: value })}
@@ -350,7 +350,7 @@ export default function EditArticlePage() {
                   新建标签
                 </button>
               </div>
-              
+
               {showNewTagForm && (
                 <div className="mb-3 p-3 bg-slate-800 border border-slate-700 rounded-lg space-y-2">
                   <input
@@ -387,18 +387,17 @@ export default function EditArticlePage() {
                   </div>
                 </div>
               )}
-              
+
               <div className="flex flex-wrap gap-2 p-4 bg-slate-900 border border-slate-800 rounded-lg max-h-32 overflow-y-auto">
                 {tags.map((tag: any) => (
                   <button
                     key={tag.id}
                     type="button"
                     onClick={() => handleTagToggle(tag.id.toString())}
-                    className={`px-3 py-1 rounded-full text-sm transition-all ${
-                      formData.tagIds.includes(tag.id.toString())
+                    className={`px-3 py-1 rounded-full text-sm transition-all ${formData.tagIds.includes(tag.id.toString())
                         ? 'bg-blue-600 text-white'
                         : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                    }`}
+                      }`}
                   >
                     {tag.name}
                   </button>

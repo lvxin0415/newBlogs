@@ -1,0 +1,25 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# 复制 package.json
+COPY package*.json ./
+
+# 只安装生产依赖
+RUN npm ci --omit=dev
+
+# 复制后端代码
+COPY server ./server
+
+# 复制 public 目录结构（用于静态文件）
+COPY public ./public
+
+# 创建上传目录并设置权限
+RUN mkdir -p public/uploads && chmod 755 public/uploads
+
+EXPOSE 3001
+
+ENV PORT=3001
+ENV NODE_ENV=production
+
+CMD ["node", "server/index.js"]

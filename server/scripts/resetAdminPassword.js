@@ -23,30 +23,30 @@ async function resetAdminPassword() {
 
     if (adminUser) {
       console.log('\n🔍 找到现有管理员账户，正在更新密码...');
-      
+
       // 加密新密码
       const hashedPassword = await bcrypt.hash(newPassword, 10);
-      
+
       // 更新密码和邮箱
       await adminUser.update({
         password: hashedPassword,
         email: email
       });
-      
+
       console.log('✅ 管理员密码已更新！');
     } else {
       console.log('\n🔍 未找到管理员账户，正在创建新账户...');
-      
+
       // 加密密码
       const hashedPassword = await bcrypt.hash(newPassword, 10);
-      
+
       // 创建新管理员
       await User.create({
         username,
         password: hashedPassword,
         email
       });
-      
+
       console.log('✅ 管理员账户已创建！');
     }
 
@@ -54,7 +54,7 @@ async function resetAdminPassword() {
     console.log(`   用户名: ${username}`);
     console.log(`   密码: ${newPassword}`);
     console.log(`   邮箱: ${email}`);
-    
+
     await sequelize.close();
     process.exit(0);
   } catch (error) {

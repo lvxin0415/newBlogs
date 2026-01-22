@@ -73,7 +73,7 @@ async function initializeDatabase() {
 async function createDefaultAdmin() {
   try {
     const User = require('../models/User');
-    
+
     const existingAdmin = await User.findOne({
       where: { username: process.env.ADMIN_USERNAME || 'admin' }
     });

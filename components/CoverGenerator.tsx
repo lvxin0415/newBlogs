@@ -122,11 +122,10 @@ export default function CoverGenerator({
                         type="button"
                         onClick={() => setSelectedStyle(style)}
                         whileHover={{ y: -4 }}
-                        className={`text-left p-6 rounded-2xl transition-all ${
-                          selectedStyle.id === style.id
+                        className={`text-left p-6 rounded-2xl transition-all ${selectedStyle.id === style.id
                             ? 'glass-card border-2 border-primary shadow-[0_0_30px_var(--primary-glow)]'
                             : 'glass-card border border-border-color hover:border-secondary'
-                        }`}
+                          }`}
                       >
                         <h4 className="font-display font-bold text-lg mb-2 text-text-primary">
                           {style.name}
