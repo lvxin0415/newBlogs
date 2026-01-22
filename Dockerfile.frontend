@@ -3,6 +3,10 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# 接收构建参数
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
 # 复制依赖文件
 COPY package*.json ./
 
@@ -12,7 +16,7 @@ RUN npm ci
 # 复制源代码
 COPY . .
 
-# 构建 Next.js
+# 构建 Next.js（环境变量会被内联到 bundle 中）
 RUN npm run build
 
 # ==================== 生产阶段 ====================

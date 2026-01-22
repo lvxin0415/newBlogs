@@ -6,12 +6,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.frontend
+      args:
+        - NEXT_PUBLIC_API_URL=http://39.104.209.214:3003/api
     container_name: blog-frontend
     restart: always
     ports:
       - "3002:3000"
     environment:
       - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://39.104.209.214:3003/api
     depends_on:
       - backend
     networks:

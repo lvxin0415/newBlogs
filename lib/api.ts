@@ -1,6 +1,10 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+// 生产环境使用相对路径（同域部署），开发环境使用 localhost
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ||
+  (typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+    ? '/api'  // 生产环境：使用相对路径
+    : 'http://localhost:3001/api');  // 开发环境：使用本地后端
 
 // 自定义 API 实例类型，直接返回数据而不是 AxiosResponse
 interface ApiInstance extends AxiosInstance {
