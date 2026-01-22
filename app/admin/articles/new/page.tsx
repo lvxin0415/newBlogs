@@ -557,7 +557,7 @@ export default function NewArticlePage() {
                         </button>
                       ))}
                       {tags.length === 0 && !showNewTagForm && (
-                        <p className="text-white/40 text-sm">暂无标签，点击"新建"创建第一个标签</p>
+                        <p className="text-white/40 text-sm">暂无标签，点击「新建」创建第一个标签</p>
                       )}
                     </div>
                   </section>

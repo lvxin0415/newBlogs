@@ -1,6 +1,14 @@
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+
+// 自定义 API 实例类型，直接返回数据而不是 AxiosResponse
+interface ApiInstance extends AxiosInstance {
+  get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+  delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
+}
 
 // 创建 axios 实例
 const api = axios.create({
@@ -8,7 +16,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-});
+}) as ApiInstance;
 
 // 请求拦截器 - 添加 token
 api.interceptors.request.use(
@@ -26,7 +34,7 @@ api.interceptors.request.use(
   }
 );
 
-// 响应拦截器 - 处理错误
+// 响应拦截器 - 直接返回 data，处理错误
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
