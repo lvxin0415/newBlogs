@@ -3,18 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { createArticle, fetchCategories, fetchTags, uploadImage } from '@/lib/api';
 import { useAuthStore } from '@/lib/store';
 import CoverGenerator from '@/components/CoverGenerator';
 import CustomSelect from '@/components/CustomSelect';
 import { useToast } from '@/components/ToastContainer';
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
-import 'prismjs/themes/prism-tomorrow.css';
-import '@/lib/prismLoader';
-
-const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
+import ArticleEditor from '@/components/ArticleEditor';
+import ArticlePreviewModal from '@/components/ArticlePreviewModal';
 
 export default function NewArticlePage() {
   const router = useRouter();
@@ -27,6 +22,7 @@ export default function NewArticlePage() {
   const [tags, setTags] = useState([]);
   const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
   const [showNewTagForm, setShowNewTagForm] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [newCategoryDesc, setNewCategoryDesc] = useState('');
   const [newTagName, setNewTagName] = useState('');
@@ -304,19 +300,26 @@ export default function NewArticlePage() {
                       </svg>
                       正文内容
                     </span>
-                    <span className="text-xs text-white/40 font-mono">Markdown</span>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowPreview(true)}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium transition-colors"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        预览
+                      </button>
+                      <span className="text-xs text-white/40 font-mono">富文本</span>
+                    </div>
                   </label>
-                  <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm transition-all hover:border-[#00d4ff]/30" data-color-mode="dark">
-                    <MDEditor
+                  <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm transition-all hover:border-[#00d4ff]/30">
+                    <ArticleEditor
                       value={formData.content}
-                      onChange={(value) => setFormData({ ...formData, content: value || '' })}
+                      onChange={(value) => setFormData((prev) => ({ ...prev, content: value }))}
                       height={600}
-                      preview="live"
-                      className="!bg-transparent !border-none"
-                      highlightEnable={true}
-                      textareaProps={{
-                        placeholder: '在这里输入 Markdown 内容...\n\n支持代码高亮，例如：\n```javascript\nconst greeting = "Hello World";\nconsole.log(greeting);\n```',
-                      }}
                     />
                   </div>
                 </section>
@@ -549,8 +552,8 @@ export default function NewArticlePage() {
                           type="button"
                           onClick={() => handleTagToggle(tag.id.toString())}
                           className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${formData.tagIds.includes(tag.id.toString())
-                              ? 'bg-gradient-to-r from-[#ec4899] to-[#8b5cf6] text-white shadow-lg shadow-[#ec4899]/20'
-                              : 'bg-white/5 text-[#94a3b8] border border-white/10 hover:border-[#ec4899]/50 hover:text-white'
+                            ? 'bg-gradient-to-r from-[#ec4899] to-[#8b5cf6] text-white shadow-lg shadow-[#ec4899]/20'
+                            : 'bg-white/5 text-[#94a3b8] border border-white/10 hover:border-[#ec4899]/50 hover:text-white'
                             }`}
                         >
                           {tag.name}
@@ -575,8 +578,8 @@ export default function NewArticlePage() {
                       <label className="flex items-center justify-between cursor-pointer group/option">
                         <span className="flex items-center gap-3">
                           <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${formData.isPublic
-                              ? 'bg-[#00d4ff] border-[#00d4ff]'
-                              : 'border-white/20 group-hover/option:border-white/40'
+                            ? 'bg-[#00d4ff] border-[#00d4ff]'
+                            : 'border-white/20 group-hover/option:border-white/40'
                             }`}>
                             {formData.isPublic && (
                               <svg className="w-3 h-3 text-[#0a0a0a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -597,8 +600,8 @@ export default function NewArticlePage() {
                       <label className="flex items-center justify-between cursor-pointer group/option">
                         <span className="flex items-center gap-3">
                           <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${formData.isTop
-                              ? 'bg-[#8b5cf6] border-[#8b5cf6]'
-                              : 'border-white/20 group-hover/option:border-white/40'
+                            ? 'bg-[#8b5cf6] border-[#8b5cf6]'
+                            : 'border-white/20 group-hover/option:border-white/40'
                             }`}>
                             {formData.isTop && (
                               <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -619,8 +622,8 @@ export default function NewArticlePage() {
                       <label className="flex items-center justify-between cursor-pointer group/option">
                         <span className="flex items-center gap-3">
                           <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${formData.isRecommended
-                              ? 'bg-[#ec4899] border-[#ec4899]'
-                              : 'border-white/20 group-hover/option:border-white/40'
+                            ? 'bg-[#ec4899] border-[#ec4899]'
+                            : 'border-white/20 group-hover/option:border-white/40'
                             }`}>
                             {formData.isRecommended && (
                               <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -680,6 +683,14 @@ export default function NewArticlePage() {
                       )}
                     </button>
 
+                    <button
+                      type="button"
+                      onClick={() => setShowPreview(true)}
+                      className="block w-full py-3 px-6 text-center bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-[#94a3b8] hover:text-white font-medium rounded-xl transition-all"
+                    >
+                      预览
+                    </button>
+
                     <Link
                       href="/admin/articles"
                       className="block w-full py-3 px-6 text-center bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-[#94a3b8] hover:text-white font-medium rounded-xl transition-all"
@@ -691,6 +702,14 @@ export default function NewArticlePage() {
               </aside>
             </div>
           </form>
+
+          <ArticlePreviewModal
+            isOpen={showPreview}
+            onClose={() => setShowPreview(false)}
+            title={formData.title}
+            summary={formData.summary}
+            content={formData.content}
+          />
         </div>
       </div>
     </div>

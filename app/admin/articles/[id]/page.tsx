@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import {
   fetchArticle,
   updateArticle,
@@ -13,13 +12,9 @@ import {
 } from '@/lib/api';
 import { useAuthStore } from '@/lib/store';
 import CustomSelect from '@/components/CustomSelect';
+import ArticleEditor from '@/components/ArticleEditor';
+import ArticlePreviewModal from '@/components/ArticlePreviewModal';
 import { useToast } from '@/components/ToastContainer';
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
-import 'prismjs/themes/prism-tomorrow.css';
-import '@/lib/prismLoader';
-
-const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
 export default function EditArticlePage() {
   const router = useRouter();
@@ -32,6 +27,7 @@ export default function EditArticlePage() {
   const [tags, setTags] = useState([]);
   const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
   const [showNewTagForm, setShowNewTagForm] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [newTagName, setNewTagName] = useState('');
   const [formData, setFormData] = useState({
@@ -395,8 +391,8 @@ export default function EditArticlePage() {
                     type="button"
                     onClick={() => handleTagToggle(tag.id.toString())}
                     className={`px-3 py-1 rounded-full text-sm transition-all ${formData.tagIds.includes(tag.id.toString())
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                       }`}
                   >
                     {tag.name}
@@ -408,21 +404,27 @@ export default function EditArticlePage() {
 
           {/* 内容 */}
           <div>
-            <label className="block text-sm font-medium mb-2">内容 *</label>
-            <div data-color-mode="dark">
-              <MDEditor
-                value={formData.content}
-                onChange={(value) =>
-                  setFormData({ ...formData, content: value || '' })
-                }
-                height={500}
-                preview="live"
-                highlightEnable={true}
-                textareaProps={{
-                  placeholder: '在这里输入 Markdown 内容...\n\n支持代码高亮，例如：\n```javascript\nconst greeting = "Hello World";\nconsole.log(greeting);\n```',
-                }}
-              />
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-medium">内容 *</label>
+              <button
+                type="button"
+                onClick={() => setShowPreview(true)}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-sm font-medium transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                预览
+              </button>
             </div>
+            <ArticleEditor
+              value={formData.content}
+              onChange={(value) =>
+                setFormData((prev) => ({ ...prev, content: value }))
+              }
+              height={500}
+            />
           </div>
 
           {/* 设置 */}
@@ -485,11 +487,26 @@ export default function EditArticlePage() {
             >
               {loading ? '更新中...' : '更新文章'}
             </button>
+            <button
+              type="button"
+              onClick={() => setShowPreview(true)}
+              className="btn-secondary"
+            >
+              预览
+            </button>
             <Link href="/admin/articles" className="btn-secondary">
               取消
             </Link>
           </div>
         </form>
+
+        <ArticlePreviewModal
+          isOpen={showPreview}
+          onClose={() => setShowPreview(false)}
+          title={formData.title}
+          summary={formData.summary}
+          content={formData.content}
+        />
       </div>
     </div>
   );

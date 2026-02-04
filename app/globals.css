@@ -596,6 +596,139 @@ body {
 }
 
 /* ========================================
+   Quill 富文本编辑器 - 深色主题
+   ======================================== */
+.article-editor-quill,
+.article-editor-quill .quill,
+.article-editor-quill .ql-snow {
+  background: transparent !important;
+}
+.article-editor-quill .ql-toolbar {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+.article-editor-quill .ql-toolbar .ql-stroke {
+  stroke: rgba(255, 255, 255, 0.3) !important;
+}
+.article-editor-quill .ql-toolbar .ql-fill {
+  fill: rgba(255, 255, 255, 0.5) !important;
+}
+.article-editor-quill .ql-toolbar button:hover .ql-stroke {
+  stroke: #00d4ff !important;
+}
+.article-editor-quill .ql-toolbar button:hover .ql-fill {
+  fill: #00d4ff !important;
+}
+.article-editor-quill .ql-toolbar .ql-picker {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+.article-editor-quill .ql-container {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0 0 12px 12px !important;
+  background: rgba(15, 23, 42, 0.8) !important;
+}
+.article-editor-quill .ql-editor {
+  min-height: 350px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  background: rgba(15, 23, 42, 0.8) !important;
+}
+.article-editor-quill .ql-editor.ql-blank::before {
+  color: rgba(255, 255, 255, 0.4) !important;
+  font-style: normal !important;
+}
+/* 编辑器内代码块样式 */
+.article-editor-quill .ql-editor code,
+.article-editor-quill .ql-editor pre {
+  background: rgba(0, 0, 0, 0.4) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 6px !important;
+}
+.article-editor-quill .ql-editor pre {
+  padding: 12px 16px !important;
+}
+.article-editor-quill .ql-editor blockquote {
+  border-left-color: #00d4ff !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* 链接/图片弹窗 - 深色主题 */
+.article-editor-quill .ql-snow .ql-tooltip,
+.ql-snow .ql-tooltip {
+  background: rgb(30, 41, 59) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  padding: 8px 14px !important;
+  border-radius: 8px !important;
+}
+.article-editor-quill .ql-snow .ql-tooltip input[type=text],
+.ql-snow .ql-tooltip input[type=text] {
+  background: rgba(15, 23, 42, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+}
+.article-editor-quill .ql-snow .ql-tooltip input[type=text]::placeholder,
+.ql-snow .ql-tooltip input[type=text]::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+.article-editor-quill .ql-snow .ql-tooltip a,
+.ql-snow .ql-tooltip a {
+  color: #00d4ff !important;
+}
+.article-editor-quill .ql-snow .ql-tooltip a.ql-action::after,
+.ql-snow .ql-tooltip a.ql-action::after {
+  border-right-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 下拉选择器深色主题 */
+.article-editor-quill .ql-snow .ql-picker-options,
+.ql-snow .ql-picker-options {
+  background: rgb(30, 41, 59) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+}
+.article-editor-quill .ql-snow .ql-picker-options .ql-picker-item,
+.ql-snow .ql-picker-options .ql-picker-item {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+.article-editor-quill .ql-snow .ql-picker-options .ql-picker-item:hover,
+.ql-snow .ql-picker-options .ql-picker-item:hover {
+  color: #00d4ff !important;
+}
+
+/* 颜色选择器深色主题 */
+.article-editor-quill .ql-snow .ql-color-picker .ql-picker-options,
+.article-editor-quill .ql-snow .ql-icon-picker .ql-picker-options {
+  padding: 8px !important;
+}
+.article-editor-quill .ql-snow .ql-color-picker .ql-picker-item,
+.ql-snow .ql-color-picker .ql-picker-item {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+.article-editor-quill .ql-snow .ql-color-picker .ql-picker-item:hover,
+.ql-snow .ql-color-picker .ql-picker-item:hover {
+  border-color: #00d4ff !important;
+}
+
+/* 编辑器内对齐、缩进、字体、字号样式 */
+.article-editor-quill .ql-editor .ql-align-center {
+  text-align: center;
+}
+.article-editor-quill .ql-editor .ql-align-right {
+  text-align: right;
+}
+.article-editor-quill .ql-editor .ql-align-justify {
+  text-align: justify;
+}
+
+/* ========================================
    MDEditor Dark Theme & Code Highlighting
    ======================================== */
 
@@ -613,6 +746,7 @@ body {
   background: rgba(255, 255, 255, 0.05) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
   padding: 8px !important;
+  flex-shrink: 0 !important;
 }
 
 .w-md-editor-toolbar button {
@@ -630,7 +764,41 @@ body {
   background: rgba(0, 212, 255, 0.15) !important;
 }
 
-/* 编辑区域样式 */
+/* 左侧编辑区 - 修复滚动和布局 */
+.w-md-editor-content {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+}
+
+.w-md-editor-area {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.w-md-editor-area::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.w-md-editor-area::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.w-md-editor-area::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+.w-md-editor-area::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 212, 255, 0.5) !important;
+}
+
+/* 编辑区域样式 - 光标/选区对齐关键：禁用连字、统一行高和字体 */
 .w-md-editor-text,
 .w-md-editor-text-pre,
 .w-md-editor-text-input,
@@ -638,26 +806,42 @@ body {
 .w-md-editor-input {
   background: transparent !important;
   color: rgba(255, 255, 255, 0.9) !important;
-  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace !important;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
   font-size: 14px !important;
-  line-height: 1.6 !important;
+  line-height: 18px !important;
+  font-variant-ligatures: none !important;
+  letter-spacing: 0 !important;
+  tab-size: 4 !important;
+}
+
+.w-md-editor-text {
+  min-height: 100% !important;
 }
 
 .w-md-editor-text-input::placeholder {
   color: rgba(255, 255, 255, 0.3) !important;
 }
 
+/* 选区样式 - 确保与文字对齐 */
+.w-md-editor-text-input::selection {
+  background: rgba(0, 212, 255, 0.3) !important;
+  color: inherit !important;
+}
+
 /* 编辑器输入区的代码高亮 */
 .w-md-editor-text-pre code {
   background: transparent !important;
   color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 14px !important;
+  line-height: 18px !important;
+  font-variant-ligatures: none !important;
 }
 
-/* 编辑器中的代码块背景 */
+/* 代码块 - 移除 padding 避免选区偏移 */
 .w-md-editor-text-pre .code-block {
   background: rgba(0, 0, 0, 0.2) !important;
   border-radius: 4px !important;
-  padding: 2px 4px !important;
+  padding: 0 !important;
 }
 
 /* 预览区域样式 */
@@ -943,25 +1127,29 @@ pre[class*="language-"],
   margin: 24px 0 !important;
 }
 
-/* 滚动条样式 */
+/* 滚动条样式 - 左右两侧统一 */
 .w-md-editor-text::-webkit-scrollbar,
-.w-md-editor-preview::-webkit-scrollbar {
+.w-md-editor-preview::-webkit-scrollbar,
+.w-md-editor-area::-webkit-scrollbar {
   width: 8px !important;
   height: 8px !important;
 }
 
 .w-md-editor-text::-webkit-scrollbar-track,
-.w-md-editor-preview::-webkit-scrollbar-track {
+.w-md-editor-preview::-webkit-scrollbar-track,
+.w-md-editor-area::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05) !important;
 }
 
 .w-md-editor-text::-webkit-scrollbar-thumb,
-.w-md-editor-preview::-webkit-scrollbar-thumb {
+.w-md-editor-preview::-webkit-scrollbar-thumb,
+.w-md-editor-area::-webkit-scrollbar-thumb {
   background: rgba(0, 212, 255, 0.3) !important;
   border-radius: 4px !important;
 }
 
 .w-md-editor-text::-webkit-scrollbar-thumb:hover,
-.w-md-editor-preview::-webkit-scrollbar-thumb:hover {
+.w-md-editor-preview::-webkit-scrollbar-thumb:hover,
+.w-md-editor-area::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 212, 255, 0.5) !important;
 }

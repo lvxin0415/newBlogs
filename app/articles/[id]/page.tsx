@@ -101,16 +101,30 @@ export default function ArticlePage() {
 
   const headings = [];
   if (article.content) {
-    const regex = /^(#{2,3})\s+(.+)$/gm;
-    let match;
-    let index = 0;
-    while ((match = regex.exec(article.content)) !== null) {
-      headings.push({
-        level: match[1].length,
-        text: match[2],
-        id: `heading-${index}`,
-      });
-      index++;
+    if (article.content.trim().startsWith('<')) {
+      const htmlRegex = /<h([23])[^>]*>([^<]+)<\/h[23]>/gi;
+      let match;
+      let index = 0;
+      while ((match = htmlRegex.exec(article.content)) !== null) {
+        headings.push({
+          level: parseInt(match[1]),
+          text: match[2].trim(),
+          id: `heading-${index}`,
+        });
+        index++;
+      }
+    } else {
+      const mdRegex = /^(#{2,3})\s+(.+)$/gm;
+      let match;
+      let index = 0;
+      while ((match = mdRegex.exec(article.content)) !== null) {
+        headings.push({
+          level: match[1].length,
+          text: match[2],
+          id: `heading-${index}`,
+        });
+        index++;
+      }
     }
   }
 
